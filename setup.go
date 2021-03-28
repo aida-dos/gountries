@@ -24,6 +24,7 @@ func NewFromPath(dataPath string) *Query {
 	if queryInited == false {
 		queryInstance = &Query{
 			Countries: populateCountries(dataPath),
+			SubDivisions: make(map[string]SubDivision),
 		}
 
 		queryInstance.NameToAlpha2 = populateNameIndex(queryInstance.Countries)
@@ -40,6 +41,7 @@ func NewFromPath(dataPath string) *Query {
 				for _, n := range s.Names {
 					c.nameToSubdivision[strings.ToLower(n)] = s
 				}
+				queryInstance.SubDivisions[strings.ToLower(s.Name)] = s
 				c.nameToSubdivision[strings.ToLower(s.Name)] = s
 				c.codeToSubdivision[strings.ToLower(s.Code)] = s
 			}

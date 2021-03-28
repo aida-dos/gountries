@@ -342,6 +342,28 @@ func BenchmarkCountryLookupByName(b *testing.B) {
 	}
 }
 
+func TestFindSubdivisionByNameOk(t *testing.T) {
+	subdivisionName := "Braga"
+
+	subdivision, err := query.FindSubdivisionByName(subdivisionName)
+	if err != nil {
+		t.Fail()
+	}
+
+	assert.Equal(t, subdivisionName , subdivision.Name, fmt.Sprintf("Search %s subdivision returned %s", subdivisionName, subdivision.Name))
+}
+
+func TestFindSubdivisionByNameError(t *testing.T) {
+	subdivisionName := "123-bragaaaaa-123"
+
+	_, err := query.FindSubdivisionByName(subdivisionName)
+	if err != nil {
+		assert.Equal(t, "gountries error. Subdivision does not exist: " + subdivisionName, err.Error())
+	} else {
+		t.Fail()
+	}
+}
+
 func TestFindSubdivisionCountryByNameOk(t *testing.T) {
 	subdivisionName := "Braga"
 	subdivisionCountry := "Portugal"
