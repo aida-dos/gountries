@@ -8,6 +8,7 @@ import (
 )
 
 var query *Query
+var continentsTest Continents
 
 func TestMain(m *testing.M) {
 	var err error
@@ -16,6 +17,7 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 	query = New()
+	continentsTest = NewContinents()
 	flag.Parse()
 	os.Exit(m.Run())
 }
