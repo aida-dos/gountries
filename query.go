@@ -14,6 +14,8 @@ type Query struct {
 	NameToAlpha2   map[string]string
 	Alpha3ToAlpha2 map[string]string
 	NativeNameToAlpha2 map[string]string
+
+	SubDivisions map[string]SubDivision
 }
 
 // FindCountryByName finds a country by given name
@@ -149,6 +151,15 @@ func (q Query) FindCountries(c Country) (countries []Country) {
 	}
 
 	return
+}
+
+// FindSubdivisionByName find the subdivision given it's name
+func (q *Query) FindSubdivisionByName(subdivisionName string) (result SubDivision, err error) {
+	if result, ok := q.SubDivisions[strings.ToLower(subdivisionName)]; ok {
+		return result, nil
+	}
+
+	return SubDivision{}, makeError("Subdivision does not exist", subdivisionName)
 }
 
 // FindSubdivisionCountryByName finds the country of a given subdivision name
